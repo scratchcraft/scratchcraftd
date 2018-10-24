@@ -1,0 +1,11 @@
+[{
+  "modid":       "scratchcraftd",
+  "name":        "ScratchCraft Daemon",
+  "description": "The ScratchCraft daemon that brokers Minecraft communication.",
+  "version":     "${version}",
+  "mcversion":   "${mcversion}",
+  "logoFile":    "assets/scratchcraftd/textures/logo.png",
+  "url":         "https://github.com/scratchcraft/scratchcraftd",
+  "authorList":  ["Tony Bargnesi"],
+  "credits":     "GitHub: KiwiGeek10"
+}]
