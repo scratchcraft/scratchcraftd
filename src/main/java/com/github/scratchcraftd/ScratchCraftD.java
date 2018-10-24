@@ -44,6 +44,7 @@ public class ScratchCraftD implements Runnable {
 
         try {
             this.server = HttpServer.create(address, numberOfQueueableConnections);
+            this.server.createContext(HeartbeatHandler.URL, new HeartbeatHandler());
             this.server.createContext(PlayerMoveForwardHandler.URL, new PlayerMoveForwardHandler(controller));
             this.server.createContext(PlayerMoveBackwardHandler.URL, new PlayerMoveBackwardHandler(controller));
             this.server.createContext(PlayerMoveLeftHandler.URL, new PlayerMoveLeftHandler(controller));
@@ -69,10 +70,21 @@ public class ScratchCraftD implements Runnable {
     static abstract class BaseHandler implements HttpHandler {
 
         void write(final HttpExchange http, final int statusCode, final String body) throws IOException {
+            http.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             http.sendResponseHeaders(statusCode, body.length());
             OutputStream os = http.getResponseBody();
             os.write(body.getBytes());
             os.close();
+        }
+    }
+
+    static class HeartbeatHandler extends BaseHandler {
+
+        private static final String URL = "/heartbeat";
+
+        @Override
+        public void handle(HttpExchange http) throws IOException {
+            write(http, 200, "");
         }
     }
 
